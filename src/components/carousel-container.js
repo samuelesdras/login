@@ -13,8 +13,8 @@ const BootstrapCarousel = () => {
                     src="teste.jpeg"
                   />  
                   <Carousel.Caption>  
-                    <h3>Slide 1 </h3>  
-                    <h6>This space is to explain the meaning of the image on slide 1</h6>  
+                    <h3>Leonidas </h3>  
+                    <h6>Rei de Esparta</h6>  
                   </Carousel.Caption>
                   </Carousel.Item  >  
                   <Carousel.Item className="carousel__frame">  
@@ -23,8 +23,8 @@ const BootstrapCarousel = () => {
                       src="teste2.jpg"
                     />  
                   <Carousel.Caption>  
-                    <h3>Slide 2 </h3>  
-                    <h6>This space is to explain the meaning of the image on slide 2</h6>  
+                    <h3>Miamotto Mussashi</h3>  
+                    <h6>Samurai lendário</h6>  
                   </Carousel.Caption>
                   </Carousel.Item>  
                   <Carousel.Item className="carousel__frame">  
@@ -33,8 +33,8 @@ const BootstrapCarousel = () => {
                       src="teste3.jpg"
                     />  
                    <Carousel.Caption>  
-                    <h3>Slide 3 </h3>  
-                    <h6>This space is to explain the meaning of the image on slide 3</h6>  
+                    <h3>Oda Nobunaga</h3>  
+                    <h6>Daimyo no período Sengoku</h6>  
                   </Carousel.Caption>
                   </Carousel.Item>  
               </Carousel>  

@@ -1,0 +1,16 @@
+{
+  "posts": [
+    {
+      "fullName": "Samuel Esdras Pereira Barbosa",
+      "login": "samuelesdras@yahoo.com.br",
+      "password": "123",
+      "id": 1
+    },
+    {
+      "fullName": "Caio Cesar Siqueira Barbosa",
+      "login": "caiocesardpp@gmail.com",
+      "password": "123",
+      "id": 2
+    }
+  ]
+}
