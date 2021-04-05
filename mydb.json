@@ -11,6 +11,24 @@
       "login": "caiocesardpp@gmail.com",
       "password": "123",
       "id": 2
+    },
+    {
+      "fullName": "Samuel",
+      "login": "samuelesdras@yahoo.com.br",
+      "password": "123",
+      "id": 3
+    },
+    {
+      "fullName": "Samuel",
+      "login": "samuelesdras2@yahoo.com.br",
+      "password": "123",
+      "id": 4
+    },
+    {
+      "fullName": "Samuel",
+      "login": "samuelesdras2@yahoo.com.br",
+      "password": "123",
+      "id": 5
     }
   ]
 }

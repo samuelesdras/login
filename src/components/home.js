@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import CarouselContainer from './carousel-container';
 import { Link, useHistory } from 'react-router-dom';
 import './style.scss';
@@ -19,8 +19,32 @@ const Home = () => {
 
   const [userFromApi, setUserFromApi] = useState('');
   const [passwordFromApi, setPasswordFromApi] = useState('');
-  console.log("userFromApi",userFromApi)
-  console.log("passwordFromApi",passwordFromApi)
+  
+  const [foundUser, setFoundUser] = useState('');
+
+  const [allUsersFromApi, setAllUsersFromApi] = useState([]);
+  const [actualUser, setActualUser] = useState('');
+  const [actualPassword, setActualPassword] = useState('');
+  
+  useEffect(() => (
+    axios.get(`http://localhost:3004/posts/`)
+    .then(res => {
+      setAllUsersFromApi([res.data])  
+      })
+    ),[])
+
+  
+    useEffect(() => (
+      allUsersFromApi.map(([user])=>{
+        if(user.login == login){
+          setActualUser(user.login)
+          setActualPassword(user.password)
+        }else{
+          setActualUser('')
+          setActualPassword('')
+        }
+      })
+    ),[login])
 
   const ValidationSchema = Yup.object().shape({
     login: Yup.string()
@@ -35,7 +59,7 @@ const Home = () => {
   });
 
   const testCredencials = () => {
-    if (login == userFromApi && password == passwordFromApi){
+    if (login == actualUser && password == actualPassword){
       toast.success('Bem vindo ao seu refúgio!')
       history.push(`/welcome`)
 
@@ -44,9 +68,9 @@ const Home = () => {
     }
   }
 
+
   return (
    <>
-
     <Formik
       initialValues={{
           login,
@@ -58,16 +82,9 @@ const Home = () => {
         setSubmitting(false);
         axios.get(`http://localhost:3004/posts/?login=${login}&password=${password}`)
         .then(res => {
-          setUserFromApi(res.data[0].login);
-          setPasswordFromApi(res.data[0].password)
+          setUserFromApi(res.data[0]?.login);
+          setPasswordFromApi(res.data[0]?.password);
         })
-        //   axios.post(`http://localhost:2000/users/update/${id}`, dataToSave).then(() => {
-        //       console.log("Usuário atualizado.")
-        //       toast.success('Usuário atualizado')
-        //   }).catch(() => {
-        //     console.log("Não foi possível atualizar o usuário.")
-        //     toast.error('Não foi possível atualizar o usuário.')
-        // });
         setSubmitting(true);
         testCredencials();
     }}>
@@ -166,10 +183,7 @@ const Home = () => {
                             </div>
                           </div>
 
-
-
                           <div className="control">
-
                             <div className="login__newuser">
                               <div>
                                 <button class="btn btn-primary" type="submit">Sing in with google</button>
@@ -179,17 +193,14 @@ const Home = () => {
                                 <Link to="/profile" className="login__labels">Crie uma conta</Link>
                               </div>
                             </div>
-
                             <div className="background__img1--div">
                               <img src="katana2.png" className="background__img1" />
                             </div>
-
                           </div>
-
                         </form>
-                        </div>
                       </div>
                     </div>
+                  </div>
                 )
             }
       </Formik>

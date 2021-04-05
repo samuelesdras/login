@@ -15,6 +15,8 @@ const Profile = () => {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
 
+  const [allUsersFromApi, setAllUsersFromApi] = useState([]);
+  const [userExists, setUserExists] = useState('');
   const [userFromApi, setUserFromApi] = useState('');
 
   const [submitting, setSubmitting] = useState(false);
@@ -28,6 +30,23 @@ const Profile = () => {
       return false
     }
   }
+
+  useEffect(() => (
+    axios.get(`http://localhost:3004/posts/`)
+    .then(res => {
+      setAllUsersFromApi([res.data])  
+      })
+    ),[])
+
+    useEffect(() => (
+      allUsersFromApi.map(([user])=>{
+        if(user.login == login){
+          setUserExists(true)
+        }else{
+          setUserExists(false)
+        }
+      })
+    ),[login])
 
   const ValidationSchema = Yup.object().shape({
     fullName: Yup.string()
@@ -71,24 +90,25 @@ const Profile = () => {
        
         axios.get(`http://localhost:3004/posts/?login=${login}`)
         .then(res => {
-          setUserFromApi(res.data[0].login);
-          console.log("res.data[0].login",res.data[0].login)
+          setUserFromApi(res.data[0]?.login);
         })
 
-        if(userFromApi != login){
-          console.log("userExists",userFromApi)
-          console.log("login", login)
-          axios.post(`http://localhost:3004/posts`, dataToSave)
-            .then(
-              toast.success('Bem vindo guerreiro!! Sua conta foi criada.')
-            ).catch(() => {
-              toast.error('Não foi possível agora, tente mais tarde')
-          })
-          setSubmitting(true);
-        }else{
+        if(userExists){
           toast.error('Este login/e-mail já pertence a um guerreiro. Tente entrar ou registrar outro e-mail');
-          setSubmitting(true);
-        }
+          }else if(userFromApi != login){
+            console.log("userExists",userFromApi)
+            console.log("login", login)
+            axios.post(`http://localhost:3004/posts`, dataToSave)
+              .then(
+                toast.success('Bem vindo guerreiro!! Sua conta foi criada.')
+              ).catch(() => {
+                toast.error('Não foi possível agora, tente mais tarde')
+            })
+            setSubmitting(true);
+          }else{
+            toast.error('Este login/e-mail já pertence a um guerreiro. Tente entrar ou registrar outro e-mail');
+            setSubmitting(true);
+          }
     }}>
       {({
           values,
